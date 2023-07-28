@@ -1,10 +1,8 @@
 package tterrag.customthings;
 
+import static tterrag.customthings.CustomThings.*;
+
 import net.minecraftforge.client.ClientCommandHandler;
-import tterrag.customthings.common.command.CommandCustomThings;
-import tterrag.customthings.common.config.ConfigHandler;
-import tterrag.customthings.common.config.json.items.ItemType;
-import tterrag.customthings.common.handlers.FuelHandler;
 
 import com.enderio.core.IEnderMod;
 import com.enderio.core.common.compat.CompatRegistry;
@@ -18,68 +16,62 @@ import cpw.mods.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-
-import static tterrag.customthings.CustomThings.*;
+import tterrag.customthings.common.command.CommandCustomThings;
+import tterrag.customthings.common.config.ConfigHandler;
+import tterrag.customthings.common.config.json.items.ItemType;
+import tterrag.customthings.common.handlers.FuelHandler;
 
 @Mod(modid = MODID, name = NAME, version = VERSION, dependencies = DEPENDENCIES)
-public class CustomThings implements IEnderMod
-{
+public class CustomThings implements IEnderMod {
+
     public static final String MODID = "customthings";
     public static final String NAME = "Custom Things";
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDENCIES = "after:endercore";
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         ConfigHandler.preInit(event);
-        CompatRegistry.INSTANCE.registerCompat(RegisterTime.POSTINIT, "tterrag.customthings.common.nei.NEIHider", "NotEnoughItems");
-        if (event.getSide().isClient())
-        {
+        CompatRegistry.INSTANCE
+            .registerCompat(RegisterTime.POSTINIT, "tterrag.customthings.common.nei.NEIHider", "NotEnoughItems");
+        if (event.getSide()
+            .isClient()) {
             ClientCommandHandler.instance.registerCommand(new CommandCustomThings());
         }
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         ConfigHandler.init();
         GameRegistry.registerFuelHandler(new FuelHandler());
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         ConfigHandler.postInit();
     }
 
     @EventHandler
-    public void onMissingMapping(FMLMissingMappingsEvent event)
-    {
-        for (MissingMapping m : event.get())
-        {
-            if (m.type == GameRegistry.Type.ITEM && m.name.contains("customthings.item"))
-            {
+    public void onMissingMapping(FMLMissingMappingsEvent event) {
+        for (MissingMapping m : event.get()) {
+            if (m.type == GameRegistry.Type.ITEM && m.name.contains("customthings.item")) {
                 m.remap(ItemType.getItem());
             }
         }
     }
 
     @Override
-    public String modid()
-    {
+    public String modid() {
         return MODID;
     }
 
     @Override
-    public String name()
-    {
+    public String name() {
         return NAME;
     }
 
     @Override
-    public String version()
-    {
+    public String version() {
         return VERSION;
     }
 }

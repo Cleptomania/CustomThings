@@ -6,50 +6,45 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+
 import tterrag.customthings.common.config.ConfigHandler;
 
-public class CommandCustomThings extends CommandBase
-{
+public class CommandCustomThings extends CommandBase {
+
     public static String[] ARGS = { "reloadResources" };
 
     @Override
-    public String getCommandName()
-    {
+    public String getCommandName() {
         return "customthings";
     }
 
     @Override
-    public String getCommandUsage(ICommandSender p_71518_1_)
-    {
+    public String getCommandUsage(ICommandSender p_71518_1_) {
         return "customthings.command.usage";
     }
 
     @Override
-    public int getRequiredPermissionLevel()
-    {
+    public int getRequiredPermissionLevel() {
         return 0;
     }
 
     @Override
-    public void processCommand(ICommandSender p_71515_1_, String[] args)
-    {
-        if (args.length < 1)
-        {
+    public void processCommand(ICommandSender p_71515_1_, String[] args) {
+        if (args.length < 1) {
             throw new WrongUsageException("customthings.command.noArgs");
         }
 
         String cmd = args[0];
-        if (ARGS[0].equals(cmd))
-        {
+        if (ARGS[0].equals(cmd)) {
             ConfigHandler.assembleResourcePack();
-            Minecraft.getMinecraft().refreshResources();
+            Minecraft.getMinecraft()
+                .refreshResources();
         }
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public List addTabCompletionOptions(ICommandSender player, String[] args)
-    {
+    public List addTabCompletionOptions(ICommandSender player, String[] args) {
         return getListOfStringsMatchingLastWord(args, ARGS);
     }
 }

@@ -7,39 +7,34 @@ import java.util.List;
 import java.util.Scanner;
 
 import net.minecraft.item.ItemStack;
-import tterrag.customthings.common.config.ConfigHandler;
-import codechicken.nei.api.API;
 
 import com.enderio.core.common.compat.ICompat;
 import com.enderio.core.common.util.ItemUtil;
 
-public class NEIHider implements ICompat
-{
+import codechicken.nei.api.API;
+import tterrag.customthings.common.config.ConfigHandler;
+
+public class NEIHider implements ICompat {
+
     private static List<String> readStrings = new ArrayList<String>();
-    public static void load()
-    {
+
+    public static void load() {
         File file = new File(ConfigHandler.baseDir.getAbsolutePath() + "/hiddenItems.txt");
 
-        try
-        {
-            if (!file.exists())
-            {
+        try {
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            
+
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine())
-                readStrings.add(scanner.nextLine());
-            
+            while (scanner.hasNextLine()) readStrings.add(scanner.nextLine());
+
             scanner.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
-        for (String s : readStrings)
-        {
+
+        for (String s : readStrings) {
             ItemStack stack = (ItemStack) ItemUtil.parseStringIntoRecipeItem(s, true);
             API.hideItem(stack);
         }

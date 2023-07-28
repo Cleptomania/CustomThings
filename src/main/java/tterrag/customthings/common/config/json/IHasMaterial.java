@@ -2,7 +2,7 @@ package tterrag.customthings.common.config.json;
 
 import net.minecraft.item.ItemStack;
 
-public interface IHasMaterial
-{
+public interface IHasMaterial {
+
     ItemStack getRepairMat();
 }

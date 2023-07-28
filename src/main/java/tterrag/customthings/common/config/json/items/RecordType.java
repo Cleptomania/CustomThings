@@ -10,24 +10,23 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.StringUtils;
 
-import tterrag.customthings.common.item.ItemCustomRecord;
 import cpw.mods.fml.common.registry.GameRegistry;
+import tterrag.customthings.common.item.ItemCustomRecord;
 
-public class RecordType extends ItemType
-{
+public class RecordType extends ItemType {
+
     /* JSON Fields @formatter:off */
     public int color = 0xFF70FF;
     public boolean isCreeperLoot = true;
     /* End JSON Fields @formatter:on */
-    
+
     private transient ItemRecord item;
-    
+
     @Override
-    public void register()
-    {
-    	// Max stack size must be 1 or we get a dupe bug, so ignore json value
-    	maxStackSize = 1;
-    	
+    public void register() {
+        // Max stack size must be 1 or we get a dupe bug, so ignore json value
+        maxStackSize = 1;
+
         super.register();
         item = new ItemCustomRecord(this);
         GameRegistry.registerItem(item, name);
@@ -38,42 +37,34 @@ public class RecordType extends ItemType
     }
 
     public static final List<RecordType> types = new ArrayList<RecordType>();
-    
-    public static int getColor(Item item)
-    {
-        for (RecordType type : types)
-        {
-            if (type.item == item)
-            {
+
+    public static int getColor(Item item) {
+        for (RecordType type : types) {
+            if (type.item == item) {
                 return type.color;
             }
         }
-        
+
         return 0xFFFFFF;
     }
 
-    public static int getNumRecords()
-    {
+    public static int getNumRecords() {
         return types.size();
     }
-    
-    public static int getLootRecordCount()
-    {
+
+    public static int getLootRecordCount() {
         int count = 0;
-        for (RecordType type : types)
-        {
+        for (RecordType type : types) {
             count += type.isCreeperLoot ? 1 : 0;
         }
         return count;
     }
 
-    public static Item getItem(int index)
-    {
+    public static Item getItem(int index) {
         return types.get(index % types.size()).item;
     }
 
-    public static RecordType getType(int index)
-    {
+    public static RecordType getType(int index) {
         return types.get(index);
     }
 }
