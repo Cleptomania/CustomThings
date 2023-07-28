@@ -1,8 +1,5 @@
 // Add any additional repositories for your dependencies here
 
 repositories {
-    maven {
-        name 'tterrag maven'
-        url "http://maven.tterrag.com/"
-    }
+    maven { url 'https://jitpack.io' }
 }
